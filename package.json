@@ -5,6 +5,7 @@
   "description": "",
   "author": "Dahlen Marvin",
   "scripts": {
+    "start": "electron .",
     "publish": "electron-builder --win -p always"
   },
   "devDependencies": {

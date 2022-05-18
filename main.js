@@ -6,32 +6,11 @@ autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 log.info('Démarrage de l\'application...');
 
-let template = []
-if (process.platform === 'darwin') {
-  // OS X
-  const name = app.getName();
-  template.unshift({
-    label: name,
-    submenu: [
-      {
-        label: 'About ' + name,
-        role: 'about'
-      },
-      {
-        label: 'Quit',
-        accelerator: 'Command+Q',
-        click() { app.quit(); }
-      },
-    ]
-  })
-}
+const name = app.getName();
+const version = app.getVersion()
 
 let win;
 
-function sendStatusToWindow(text) {
-  log.info(text);
-  win.webContents.send('message', text);
-}
 function createDefaultWindow() {
   win = new BrowserWindow({
     webPreferences: {
@@ -47,36 +26,29 @@ function createDefaultWindow() {
   return win;
 }
 autoUpdater.on('checking-for-update', () => {
-  sendStatusToWindow('Recherche de mise à jour...');
+  log.info('Recherche de mise à jour...');
 })
 autoUpdater.on('update-available', (info) => {
-  log.info(info)
-  sendStatusToWindow('Une mise à jour est disponible.');
+  log.info('Une mise à jour est disponible.');
 })
 autoUpdater.on('update-not-available', (info) => {
-  sendStatusToWindow('pas de mise à jour disponible.');
+  log.info('Pas de mise à jour disponible.');
 })
 autoUpdater.on('error', (err) => {
-  sendStatusToWindow('Erreur. ' + err);
-  log.error(err)
+  log.error('Erreur : ' + err);
 })
 autoUpdater.on('download-progress', (progressObj) => {
   let log_message = "Vitesse de téléchargement: " + progressObj.bytesPerSecond;
   log_message = log_message + ' - Téléchargé ' + progressObj.percent + '%';
   log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-  sendStatusToWindow(log_message);
-  log.info(log_message)
+  log.info(log_message);
 })
 autoUpdater.on('update-downloaded', (info) => {
-  sendStatusToWindow('Mise à jour téléchargée');
-  log.info('Mise à jour téléchargée')
-  log.info(info)
+  log.info('Mise à jour téléchargée');
   autoUpdater.quitAndInstall()
 });
 app.on('ready', function() {
   // Create the Menu
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
   createDefaultWindow();
 });
 app.on('window-all-closed', () => {
