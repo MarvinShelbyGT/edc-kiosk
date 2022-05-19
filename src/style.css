@@ -1,0 +1,113 @@
+body {
+    background-image: url("../assets/bg.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 50% 50%;
+}
+
+.edc-button {
+    width: 170px;
+    margin-top: 1rem;
+    border-radius: 4px;
+    border: 0;
+    box-shadow: none;
+    color: black;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 500;
+    height: 64px;
+    line-height: 1;
+    padding-left: 1rem;
+    padding-right: 2rem;
+    position: fixed;
+    text-align:right;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: box-shadow 150ms cubic-bezier(0.61, 1, 0.88, 1);
+    background-color: #b9975b;
+}
+
+.edc-button span {
+    display: block;
+    line-height: 1;
+    padding-right: .25rem;
+    font-size: .75rem;
+}
+
+.edc-button-icon {
+    overflow: hidden;
+    position: absolute;
+    top: 40%;
+    width: 24px;
+}
+
+.edc-muted-text {
+    color: white;
+    font-size: .75rem;
+}
+
+.edc-content {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.75);
+    width: 1440px;
+    height: 600px;
+    top: 125px;
+    left: 40px;
+    border-radius: 5px;
+}
+
+.edc-footer-clock-date {
+    position: fixed;
+    bottom: 70px;
+    left: 20px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 30px;
+}
+
+.edc-footer-clock-hours {
+    position: fixed;
+    bottom: 10px;
+    left: 15px;
+    color: white;
+    font-size: 50px;
+}
+
+.edc-footer-logo {
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+}
+
+.edc-button-1 {
+    left: 20px;
+}
+
+.edc-button-2 {
+    left: 210px;
+}
+
+.edc-button-3 {
+    left: 400px;
+}
+
+.edc-button-4 {
+    left: 590px;
+}
+
+.edc-button-5 {
+    left: 780px;
+}
+
+.edc-button-6 {
+    left: 970px;
+}
+
+.edc-button-7 {
+    left: 1160px;
+}
+
+.edc-button-flag {
+    width: 150px;
+    left: 1350px;
+}

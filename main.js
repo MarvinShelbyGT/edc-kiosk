@@ -13,6 +13,10 @@ let win;
 
 function createDefaultWindow() {
   win = new BrowserWindow({
+    width: 1920,
+    height: 1080,
+    fullscreen: true,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -22,7 +26,7 @@ function createDefaultWindow() {
   win.on('closed', () => {
     win = null;
   });
-  win.loadURL(`file://${__dirname}/version.html#v${app.getVersion()}`);
+  win.loadFile(`src/index.html`);
   return win;
 }
 autoUpdater.on('checking-for-update', () => {
@@ -45,7 +49,7 @@ autoUpdater.on('download-progress', (progressObj) => {
 })
 autoUpdater.on('update-downloaded', (info) => {
   log.info('Mise à jour téléchargée');
-  autoUpdater.quitAndInstall()
+  autoUpdater.quitAndInstall(true, true)
 });
 app.on('ready', function() {
   // Create the Menu
