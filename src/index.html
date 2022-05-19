@@ -91,13 +91,35 @@
 
     <div class="edc-footer">
         <div class="edc-footer-clock">
-            <div class="edc-footer-clock-date">Jeudi 19 mai 2022</div>
-            <div class="edc-footer-clock-hours">10:46</div>
+            <div class="edc-footer-clock-date"></div>
+            <div class="edc-footer-clock-hours"></div>
             <div class="edc-footer-logo">
                 <img src="../assets/logo.jpg" alt="" width="180" height="100">
             </div>
         </div>
     </div>
+
+    <script>
+
+        function startTime() {
+            const today = new Date();
+            const h = today.getHours();
+            let m = today.getMinutes();
+            m = checkTime(m);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+            const string = today.toLocaleDateString('fr-FR', options)
+            document.getElementsByClassName('edc-footer-clock-hours')[0].textContent = h + ":" + m
+            document.getElementsByClassName('edc-footer-clock-date')[0].textContent = string[0].toUpperCase() + string.slice(1)
+        }
+
+        function checkTime(i) {
+            if (i < 10) {i = "0" + i}  // add zero in front of numbers < 10
+            return i;
+        }
+
+        setInterval(startTime, 500)
+
+    </script>
 
 </body>
 </html>

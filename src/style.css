@@ -50,8 +50,8 @@ body {
 .edc-content {
     position: fixed;
     background-color: rgba(0, 0, 0, 0.75);
-    width: 1440px;
-    height: 600px;
+    width: 1840px;
+    height: 820px;
     top: 125px;
     left: 40px;
     border-radius: 5px;
@@ -84,30 +84,29 @@ body {
 }
 
 .edc-button-2 {
-    left: 210px;
+    right: 1220px;
 }
 
 .edc-button-3 {
-    left: 400px;
+    right: 1020px;
 }
 
 .edc-button-4 {
-    left: 590px;
+    right: 820px;
 }
 
 .edc-button-5 {
-    left: 780px;
+    right: 620px;
 }
 
 .edc-button-6 {
-    left: 970px;
+    right: 420px;
 }
 
 .edc-button-7 {
-    left: 1160px;
+    right: 220px;
 }
 
 .edc-button-flag {
-    width: 150px;
-    left: 1350px;
+    right: 20px;
 }
