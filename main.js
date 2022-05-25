@@ -4,10 +4,11 @@ const {autoUpdater} = require("electron-updater");
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
-log.info('Démarrage de l\'application...');
 
 const name = app.getName();
 const version = app.getVersion()
+
+log.info('Démarrage de l\'application ' + name + ' en version ' + version);
 
 let win;
 
@@ -19,7 +20,8 @@ function createDefaultWindow() {
     frame: false,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
+      nativeWindowOpen: true
     }
   });
   win.on('closed', () => {
@@ -53,11 +55,12 @@ autoUpdater.on('update-downloaded', (info) => {
 app.on('ready', function() {
   // Create the Menu
   createDefaultWindow();
+  setInterval(checkUpdate, 60 * 60 * 1000)
 });
 app.on('window-all-closed', () => {
   app.quit();
 });
 
-app.on('ready', function()  {
-  autoUpdater.checkForUpdatesAndNotify();
-});
+function checkUpdate() {
+  autoUpdater.checkForUpdatesAndNotify()
+}

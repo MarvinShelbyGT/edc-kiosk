@@ -1,6 +1,6 @@
 {
   "name": "edc-kiosk",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "main": "main.js",
   "description": "",
   "author": "Dahlen Marvin",
@@ -25,10 +25,12 @@
     "nsis": {
       "oneClick": false
     },
-    "publish": [{
-      "provider": "github",
-      "owner": "MarvinShelbyGT",
-      "repo": "edc-kiosk"
-    }]
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "MarvinShelbyGT",
+        "repo": "edc-kiosk"
+      }
+    ]
   }
 }
