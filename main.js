@@ -1,6 +1,8 @@
 const {app, BrowserWindow, Menu} = require('electron');
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
+const dotenv = require('dotenv')
+const env = dotenv.config()
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -9,6 +11,7 @@ const name = app.getName();
 const version = app.getVersion()
 
 log.info('Démarrage de l\'application ' + name + ' en version ' + version);
+//log.info(env.parsed.DATABASE_HOST);
 
 let win;
 
