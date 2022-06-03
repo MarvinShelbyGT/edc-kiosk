@@ -1,13 +1,14 @@
-const {app, BrowserWindow, Menu} = require('electron');
-const log = require('electron-log');
-const {autoUpdater} = require("electron-updater");
+const {app, BrowserWindow, Menu, ipcMain} = require('electron')
+const log = require('electron-log')
+const path = require('path')
+const {autoUpdater} = require("electron-updater")
 const dotenv = require('dotenv')
 const env = dotenv.config()
 
-autoUpdater.logger = log;
-autoUpdater.logger.transports.file.level = 'info';
+autoUpdater.logger = log
+autoUpdater.logger.transports.file.level = 'info'
 
-const name = app.getName();
+const name = app.getName()
 const version = app.getVersion()
 
 log.info('Démarrage de l\'application ' + name + ' en version ' + version);
@@ -30,7 +31,7 @@ function createDefaultWindow() {
   win.on('closed', () => {
     win = null;
   });
-  win.loadFile(`src/index.html`);
+  win.loadFile(`src/layout.html`);
   return win;
 }
 autoUpdater.on('checking-for-update', () => {
@@ -58,7 +59,7 @@ autoUpdater.on('update-downloaded', (info) => {
 app.on('ready', function() {
   // Create the Menu
   createDefaultWindow();
-  setInterval(checkUpdate, 60 * 60 * 1000)
+  setInterval(checkUpdate, 10 * 60 * 1000)
 });
 app.on('window-all-closed', () => {
   app.quit();
