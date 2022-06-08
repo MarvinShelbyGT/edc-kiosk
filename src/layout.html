@@ -3,6 +3,7 @@
 <head>
     <title>EDC - KIOSK - HOME</title>
     <link rel="stylesheet" href="../src/style.css">
+    <link rel="stylesheet" href="../src/swiper.css"/>
 </head>
 <body>
     <div class="header">
@@ -86,8 +87,15 @@
 
     <div class="edc-content" id="content">
 
+    </div>
 
+    <div id="edc-promotions" style="visibility: hidden;">
+        <div class="swiper mySwiper" style="position: fixed; margin-top: 150px">
+            <div class="swiper-wrapper" id="swiper-wrapper">
 
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
     </div>
 
     <div class="edc-footer">
@@ -100,11 +108,82 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
     <script>
 
         const ipcRenderer = require('electron').ipcRenderer
+        const log = require('electron-log')
+        const getPromotionLog = log.scope('promotion_update')
+        const schedule = require('node-schedule')
+        schedule.scheduleJob('0 0 * * * ', () => {
+            loadPromotions()
+        })
+        // Base de données
+        const mysql = require('mysql')
+        // DOM
         const homeBtn = document.getElementById("homeBtn")
         const content = document.getElementById("content")
+        const promotion = document.getElementById("edc-promotions")
+        let html = ''
+
+        const connection = mysql.createConnection({
+            host     : "lf269054-001.eu.clouddb.ovh.net",
+            user     : "edc-kiosk",
+            password : "RWCa6uiJ", // or the original password : 'apaswword'
+            database : "kiosk",
+            port     : "35823"
+        });
+
+        function loadPromotions() {
+            connection.connect(function(err) {
+                // in case of error
+                if(err){
+                    getPromotionLog.error('Une erreur est survenue ' + err)
+                } else {
+                    getPromotionLog.info('Connexion à la BDD établie');
+                }
+            });
+
+            const query = "SELECT * FROM `promotions`"
+
+            connection.query(query, function(err, rows, fields) {
+                if(err){
+                    getPromotionLog.error("Une erreur est survenue")
+                } else {
+                    rows.forEach(function (row) {
+                        html += '<div class="swiper-slide">'
+                        html += '<div class="title">' + row.title + '</div>'
+                        html += '<div class="text">'
+                        html += '<p>'
+                        html += row.content
+                        html += '</p>'
+                        html += '<div class="subtitle">' + row.new_price + '€ / ' + row.unite + ' au lieu de <span class="edc-slice-text">' + row.last_price + '€ / ' + row.unite + '</span> </div>'
+                        html += '</div>'
+                        html += '<img src="' + row.image + '" />'
+                        html += '</div>'
+                    })
+                    document.getElementById('swiper-wrapper').innerHTML = html
+                    const swiper = new Swiper('.mySwiper', {
+                        loop: true,
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                        },
+                        autoplay: {
+                            delay: 15000,
+                            disableOnInteraction: false,
+                        },
+                    })
+                }
+            })
+
+            connection.end(function(){
+                getPromotionLog.info('Déconnexion de la BDD');
+            });
+        }
+
+        loadPromotions()
 
         function startTime() {
             const today = new Date();
@@ -126,16 +205,17 @@
 
         function loadContentEntreprise() {
             homeBtn.style.visibility = "visible"
+            promotion.style.visibility = 'hidden'
             fetch('../src/entreprise.html').then((response) => {
                 response.text().then((html) => {
                     content.innerHTML = html
                 })
             })
-
         }
 
         function loadContentIndex() {
             homeBtn.style.visibility = "hidden"
+            promotion.style.visibility = 'hidden'
             fetch('../src/index.html').then((response) => {
                 response.text().then((html) => {
                     content.innerHTML = html
@@ -145,11 +225,8 @@
 
         function loadContentPromotions() {
             homeBtn.style.visibility = "visible"
-            fetch('../src/promotions.html').then((response) => {
-                response.text().then((html) => {
-                    content.innerHTML = html
-                })
-            })
+            promotion.style.visibility = 'visible'
+            content.innerHTML = ''
         }
 
     </script>
